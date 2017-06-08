@@ -1,0 +1,16 @@
+/* default styling for widget */
+.widget-zbzdir-list ul.zbzdir-biz-list li.zbzdir-biz-listitem .zbzdir-biz-link {
+  width: 100%;
+  color: white; }
+  .widget-zbzdir-list ul.zbzdir-biz-list li.zbzdir-biz-listitem .zbzdir-biz-link .zbzdir-biz {
+    background-size: cover;
+    background-position: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    text-shadow: 3px 3px 10px black; }
+    .widget-zbzdir-list ul.zbzdir-biz-list li.zbzdir-biz-listitem .zbzdir-biz-link .zbzdir-biz .zbdir-title {
+      font-size: 20px;
+      line-height: 24px;
+      padding-bottom: 5px;
+      font-weight: bold; }

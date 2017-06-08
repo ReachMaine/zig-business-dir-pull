@@ -1,0 +1,53 @@
+SELECT  p1.ID, p1.post_title,wm2.meta_value as image_url, 
+    (select meta_value from ea_20_postmeta pm where p1.ID = pm.post_id AND meta_key="_featured" ) as featured,
+    (select meta_value from ea_20_postmeta pm3 where p1.ID = pm3.post_id AND meta_key="_job_location" ) as listing_addr,
+    (select meta_value from ea_20_postmeta pm3 where p1.ID = pm3.post_id AND meta_key="geolocation_street_number" ) as street_number,
+    (select meta_value from ea_20_postmeta pm3 where p1.ID = pm3.post_id AND meta_key="geolocation_street" ) as street,
+    (select meta_value from ea_20_postmeta pm3 where p1.ID = pm3.post_id AND meta_key="geolocation_city" ) as city,
+    (select meta_value from ea_20_postmeta pm3 where p1.ID = pm3.post_id AND meta_key="geolocation_state_short" ) as state_short,
+    (select meta_value from ea_20_postmeta pm3 where p1.ID = pm3.post_id AND meta_key="geolocation_postcode" ) as zip,
+    (select meta_value from ea_20_postmeta pm where p1.ID = pm.post_id AND meta_key="_phone" ) as listing_phone
+	FROM `ea_20_posts` p1 left join ea_20_postmeta wm1 ON (
+            wm1.post_id = p1.id 
+            AND wm1.meta_value IS NOT NULL
+            AND wm1.meta_key = "_thumbnail_id"              
+        )
+        LEFT Join ea_20_postmeta wm2         ON (
+            wm1.meta_value = wm2.post_id
+            AND wm2.meta_key = "_wp_attached_file"
+            AND wm2.meta_value IS NOT NULL  
+        )
+        WHERE p1.post_status="publish"  
+        AND p1.post_type="job_listing"
+    ORDER BY 
+        p1.post_title DESC
+    LIMIT 50
+        ---------------
+
+
+if featured.... add
+         AND (select meta_value from ea_20_postmeta pm where p1.ID = pm.post_id AND meta_key="_featured") = 1 
+
+         // Rand() limit 3
+
+// for regions....
+SELECT * FROM ea_20_posts
+LEFT JOIN ea_20_term_relationships ON
+(ea_20_posts.ID = ea_20_term_relationships.object_id)
+LEFT JOIN ea_20_term_taxonomy ON
+(ea_20_term_relationships.term_taxonomy_id = ea_20_term_taxonomy.term_taxonomy_id)
+WHERE ea_20_posts.post_status = 'publish'
+AND ea_20_term_taxonomy.taxonomy = 'job_listing_region'
+AND ea_20_term_taxonomy.term_id in (49,88)
+ORDER BY post_date DESC
+
+// for categories....
+SELECT * FROM ea_20_posts
+LEFT JOIN ea_20_term_relationships ON
+(ea_20_posts.ID = ea_20_term_relationships.object_id)
+LEFT JOIN ea_20_term_taxonomy ON
+(ea_20_term_relationships.term_taxonomy_id = ea_20_term_taxonomy.term_taxonomy_id)
+WHERE ea_20_posts.post_status = 'publish'
+AND ea_20_term_taxonomy.taxonomy = 'job_listing_category'
+AND ea_20_term_taxonomy.term_id in (187)
+ORDER BY post_date DESC
